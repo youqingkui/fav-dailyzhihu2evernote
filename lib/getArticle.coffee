@@ -64,7 +64,7 @@ class SaveEvernote extends GetArticle
     $("*")
     .map (i, elem) ->
       for k of elem.attribs
-        if k != 'data-actualsrc' and k != 'src' and k !='href'
+        if k != 'data-actualsrc' and k != 'src' and k !='href' and k != 'style'
           $(this).removeAttr(k)
 
     imgs = $("img")
@@ -89,6 +89,7 @@ class SaveEvernote extends GetArticle
     ,() ->
       console.log "#{self.title} #{imgs.length} imgs down ok"
       self.enContent = $.html({xmlMode:true, decodeEntities: false})
+      console.log self.enContent
 
       cb()
 
