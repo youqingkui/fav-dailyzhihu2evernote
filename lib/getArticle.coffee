@@ -86,6 +86,9 @@ class SaveEvernote extends GetArticle
     $("header").each () ->
       $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
 
+    $("noscript").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
 
     imgs = $("img")
     console.log "#{self.title} find img length => #{imgs.length}"
