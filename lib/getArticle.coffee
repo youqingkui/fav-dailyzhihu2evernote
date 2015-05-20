@@ -77,7 +77,13 @@ class SaveEvernote extends GetArticle
 
     $("iframe").remove()
 
-    $("article,section,header").each () ->
+    $("article").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+    $("section").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+    $("header").each () ->
       $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
 
 
