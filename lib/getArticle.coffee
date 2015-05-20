@@ -77,6 +77,9 @@ class SaveEvernote extends GetArticle
 
     $("iframe").remove()
 
+    $("article,section").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
 
     imgs = $("img")
     console.log "#{self.title} find img length => #{imgs.length}"
