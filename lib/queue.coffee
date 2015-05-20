@@ -2,7 +2,7 @@ async = require('async')
 SaveEvernote = require('./getArticle')
 
 q = async.queue (data, cb) ->
-  console.log "#{data.url} now do"
+  console.log "#{data.id} #{data.title} now do"
   g = new SaveEvernote(data.id, data.noteStore, data.noteBook)
   async.series [
 
