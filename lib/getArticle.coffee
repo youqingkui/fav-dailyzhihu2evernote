@@ -71,6 +71,8 @@ class SaveEvernote extends GetArticle
           if !self.checkUrl(v)
             $(this).removeAttr(k)
 
+    $("iframe").remove()
+
 
     imgs = $("img")
     console.log "#{self.title} find img length => #{imgs.length}"
@@ -94,7 +96,6 @@ class SaveEvernote extends GetArticle
     ,() ->
       console.log "#{self.title} #{imgs.length} imgs down ok"
       self.enContent = $.html({xmlMode:true, decodeEntities: false})
-      console.log self.enContent
       cb()
 
 

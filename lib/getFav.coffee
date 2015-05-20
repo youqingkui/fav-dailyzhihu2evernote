@@ -57,6 +57,7 @@ class GetFav
             id:item.id
             noteStore:noteStore
             noteBook:'afd17372-f9c2-4186-bc88-0eede8ee416f'
+            title:item.title
           }
           self.pushTask(info)
 
@@ -88,9 +89,6 @@ class GetFav
           return txErr "", 5, {err:err, fun:'pushTask-save'} if err
 
     ]
-
-
-
 
 
 
