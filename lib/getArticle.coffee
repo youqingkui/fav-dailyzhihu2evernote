@@ -34,7 +34,8 @@ class GetArticle
       if data.body
         self.content = data.body
       else
-        return txErr op.url, 7, {err:body, fun:'getInfo-json'}, cb
+        txErr op.url, 7, {err:body, fun:'getInfo-json'}
+        self.content = "<a href=#{self.sourceUrl}>#{self.title}</a>"
 
       cb()
 
