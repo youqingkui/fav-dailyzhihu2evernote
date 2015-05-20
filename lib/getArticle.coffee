@@ -34,7 +34,7 @@ class GetArticle
       if data.body
         self.content = data.body
       else
-        return txErr op.url, 7, {err:body, fun:'getInfo-json'}
+        return txErr op.url, 7, {err:body, fun:'getInfo-json'}, cb
 
       cb()
 
