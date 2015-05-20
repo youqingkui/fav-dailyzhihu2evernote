@@ -21,4 +21,17 @@ q = async.queue (data, cb) ->
     cb()
 , 1
 
+
+
+q.saturated = () ->
+  console.log('all workers to be used')
+
+
+q.empty = () ->
+  console.log('no more tasks wating')
+
+
+q.drain = () ->
+  console.log('all tasks have been processed')
+
 module.exports = q
