@@ -31,7 +31,10 @@ class GetArticle
       data = JSON.parse(body)
       self.title = data.title
       self.sourceUrl = data.share_url
-      self.content = data.body
+      if data.body
+        self.content = data.body
+      else
+        return txErr op.url, 7, {err:body, fun:'getInfo-json'}
 
       cb()
 
