@@ -12,7 +12,7 @@
 
   rule.dayOfWeek = [0, new schedule.Range(1, 6)];
 
-  rule.hour = 9;
+  rule.hour = 20;
 
   rule.minute = 30;
 
