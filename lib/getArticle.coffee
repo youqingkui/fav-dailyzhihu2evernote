@@ -75,6 +75,11 @@ class SaveEvernote extends GetArticle
           if !self.checkUrl(v)
             $(this).removeAttr(k)
 
+        if elem.name is 'div'
+          $(this).removeAttr(k)
+
+
+
     $("iframe").remove()
 
     $("article").each () ->
