@@ -95,6 +95,10 @@ class SaveEvernote extends GetArticle
       $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
 
 
+    $("figure").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+
     imgs = $("img")
     console.log "#{self.title} find img length => #{imgs.length}"
     async.eachSeries imgs, (item, callback) ->
