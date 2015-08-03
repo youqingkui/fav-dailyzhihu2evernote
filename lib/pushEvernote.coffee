@@ -15,6 +15,8 @@ class PushEvernote
 
 
   pushNote:(html, cb) ->
+    self = @
+    makeNote self.noteStore, self.title, self.enContent, {sourceURL:''}
 
 
 
