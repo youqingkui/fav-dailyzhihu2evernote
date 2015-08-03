@@ -20,7 +20,7 @@ class CheckAdd
       headers:self.headers
     }
     request.get op, (err, res, body) ->
-      return txErr op.url, 10, {fun:'getList', err:err}, cb if err
+      return txErr {url:op.url, fun:'getList', err:err}, cb if err
 
       data = JSON.parse(body)
       console.log "#####################################"
@@ -33,7 +33,7 @@ class CheckAdd
     self = @
     async.eachSeries data.stories, (item, callback) ->
       Task.findOne {id:item.id}, (err, row) ->
-        return txErr '', 20, {fun:'checkUP-find', err:err}, cb if err
+        return txErr {fun:'checkUP-find', err:err}, cb if err
 
         if row
           console.log "find same", row.title, row.id
@@ -58,7 +58,7 @@ class CheckAdd
     task.url = 'http://daily.zhihu.com/story/' + task.id
 
     task.save (err, row) ->
-      return txErr '', 21, {fun:'addTask', err:err}, cb if err
+      return txErr {fun:'addTask', err:err}, cb if err
       console.log "已添加：", taskInfo.title, taskInfo.id
       console.log "\n"
       cb(null, row)

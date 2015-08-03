@@ -14,8 +14,8 @@ module.exports = () ->
       from: 'youqingkui@qq.com'
       to: to
       subject: subj
-      html: body
-      generateTextFromHtml: true
+      text: body
+#      generateTextFromHtml: true
 
     ,(err, info) ->
       return console.log err if err
