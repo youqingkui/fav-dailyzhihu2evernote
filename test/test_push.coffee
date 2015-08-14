@@ -1,4 +1,4 @@
-PushEvernote = require('../lib/PushEvernote')
+PushEvernote = require('../lib/pushEvernote')
 Task = require('../models/tasks')
 async = require('async')
 txErr = require('../lib/txErr')
@@ -11,13 +11,13 @@ CheckAdd = require('../lib/checkAdd')
 rule1 = new schedule.RecurrenceRule()
 rule1.dayOfWeek = [0, new schedule.Range(1, 6)]
 rule1.hour = 20
-rule1.minute = 15
+rule1.minute = 25
 
 
 rule2 = new schedule.RecurrenceRule()
 rule2.dayOfWeek = [0, new schedule.Range(1, 6)]
 rule2.hour = 20
-rule2.minute = 30
+rule2.minute = 27
 
 
 j1 = schedule.scheduleJob rule1, () ->

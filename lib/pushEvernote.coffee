@@ -67,7 +67,7 @@ class PushEvernote
           callback(null, row)
 
       (row, callback) ->
-        row.status = 2
+        row.status = 1
         row.save (err, res) ->
           return txErr {err:err, id:self.id}, cb(err) if err
 

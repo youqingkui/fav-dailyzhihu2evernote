@@ -2,7 +2,7 @@
 (function() {
   var CheckAdd, PushEvernote, Task, async, j1, j2, noteStore, rule1, rule2, schedule, token, txErr;
 
-  PushEvernote = require('../lib/PushEvernote');
+  PushEvernote = require('../lib/pushEvernote');
 
   Task = require('../models/tasks');
 
@@ -24,7 +24,7 @@
 
   rule1.hour = 20;
 
-  rule1.minute = 15;
+  rule1.minute = 25;
 
   rule2 = new schedule.RecurrenceRule();
 
@@ -32,7 +32,7 @@
 
   rule2.hour = 20;
 
-  rule2.minute = 30;
+  rule2.minute = 27;
 
   j1 = schedule.scheduleJob(rule1, function() {
     var ca;
