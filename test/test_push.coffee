@@ -10,14 +10,14 @@ CheckAdd = require('../lib/checkAdd')
 
 rule1 = new schedule.RecurrenceRule()
 rule1.dayOfWeek = [0, new schedule.Range(1, 6)]
-rule1.hour = 21
-rule1.minute = 24
+rule1.hour = 19
+rule1.minute = 10
 
 
 rule2 = new schedule.RecurrenceRule()
 rule2.dayOfWeek = [0, new schedule.Range(1, 6)]
-rule2.hour = 21
-rule2.minute = 25
+rule2.hour = 10
+rule2.minute = 20
 
 
 j1 = schedule.scheduleJob rule1, () ->
