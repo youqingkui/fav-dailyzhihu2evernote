@@ -37,6 +37,9 @@ async.waterfall [
 
     $ = cheerio.load($contentDiv.html())
     changHtml = $.html()
+    console.log "changHtml ####################"
+    console.log changHtml
+    console.log "changHtml ####################"
     cb(null, changHtml)
 
   (changeHtml, cb) ->

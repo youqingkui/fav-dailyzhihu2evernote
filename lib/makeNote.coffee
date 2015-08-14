@@ -5,6 +5,8 @@ makeNote = (noteStore, noteTitle, noteBody, options, callback) ->
   nBody = '<?xml version="1.0" encoding="UTF-8"?>'
   nBody += '<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">'
   nBody += '<en-note>' + noteBody + '</en-note>'
+#  console.log "\n"
+#  console.log nBody
   # Create note object
   ourNote = new (Evernote.Note)
   ourNote.title = noteTitle

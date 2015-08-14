@@ -58,6 +58,9 @@
       });
       $ = cheerio.load($contentDiv.html());
       changHtml = $.html();
+      console.log("changHtml ####################");
+      console.log(changHtml);
+      console.log("changHtml ####################");
       return cb(null, changHtml);
     }, function(changeHtml, cb) {
       var se;

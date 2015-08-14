@@ -65,41 +65,44 @@ class SaveEvernote extends GetArticle
   changeContent: (cb) ->
     self = @
     $ = cheerio.load(self.content, {decodeEntities: false})
-#    $("*")
-#    .map (i, elem) ->
-#      for k, v of elem.attribs
-#        if k != 'data-actualsrc' and k != 'src' and k !='href' and k != 'style'
-#          $(this).removeAttr(k)
-#
-#        if k is 'href'
-#          if !self.checkUrl(v)
-#            $(this).removeAttr(k)
-#
-#        if elem.name is 'div'
-#          $(this).removeAttr(k)
-#
-#
-#
-#    $("iframe").remove()
-#
-#    $("article").each () ->
-#      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
-#
-#    $("section").each () ->
-#      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
-#
-#    $("header").each () ->
-#      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
-#
-#    $("noscript").each () ->
-#      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
-#
-#
-#    $("figure").each () ->
-#      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
-#
-#    $("figcaption").each () ->
-#      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+    console.log " $ = cheerio.load(self.content, {decodeEntities: false}) -------------------------"
+    console.log $.html({decodeEntities: false})
+    console.log " $ = cheerio.load(self.content, {decodeEntities: false}) -------------------------"
+    $("*")
+    .map (i, elem) ->
+      for k, v of elem.attribs
+        if k != 'data-actualsrc' and k != 'src' and k !='href' and k != 'style'
+          $(this).removeAttr(k)
+
+        if k is 'href'
+          if !self.checkUrl(v)
+            $(this).removeAttr(k)
+
+        if elem.name is 'div'
+          $(this).removeAttr(k)
+
+
+
+    $("iframe").remove()
+
+    $("article").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+    $("section").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+    $("header").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+    $("noscript").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+
+    $("figure").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
+
+    $("figcaption").each () ->
+      $(this).replaceWith('<div>'+ $(this).html()+ '</div>')
 
 
 
@@ -129,7 +132,9 @@ class SaveEvernote extends GetArticle
     ,() ->
       console.log "#{self.title} #{imgs.length} imgs down ok"
       self.enContent = $.html({xmlMode:true, decodeEntities: false})
-#      console.log self.enContent
+      console.log "self.enContent ++++++++++++++++++++++++++"
+      console.log self.enContent
+      console.log "self.enContent ++++++++++++++++++++++++++"
       cb()
 
 

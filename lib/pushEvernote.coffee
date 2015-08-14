@@ -6,35 +6,81 @@ cheerio = require('cheerio')
 inlineCss = require('inline-css')
 crypto = require('crypto')
 makeNote = require('./makeNote')
+txErr = require('./txErr')
+Evernote = require('evernote').Evernote
+
 
 
 
 
 class PushEvernote
-  constructor:(@noteStore, @noteBook) ->
+  constructor:(@noteStore, @noteBook, @url, @id, @title) ->
+    @resourceArr = []
 
 
-  pushNote:(html, cb) ->
+  pushNote:(cb) ->
     self = @
-    makeNote self.noteStore, self.title, self.enContent, {sourceURL:''}
+    async.series [
+      (callback) ->
+        self.changeContent (err) ->
+          return cb() if err
+          callback()
+
+      (callback) ->
+        self.createNote (err) ->
+          return cb() if err
+
+          callback()
+
+      (callback) ->
+        self.changeStatus (err) ->
+          return cb() if err
+
+          cb()
+
+    ]
 
 
+  # 创建笔记
+  createNote:(cb) ->
+    self = @
+    makeNote self.noteStore, self.title, self.enContent,{sourceURL:self.url, resources:self.resourceArr},
+      (err, note) ->
+        return txErr {err:err, fun:'createNote', id:self.id}, cb(err) if err
 
+        console.log "##############"
+        console.log note.title + " create ok"
+        console.log "##############"
+        cb()
 
-  findTask: (cb) ->
-    Task.find {status:1}, null, {sort: {_id: -1}}, (err, rows) ->
-      return txErr {err:err, fun:'findTask-find'}, cb(err) if err
-
-      cb(null, rows)
-
-
-  changeContent:(url, title, cb) ->
+  # 标记完成
+  changeStatus:(cb) ->
     self = @
     async.waterfall [
       (callback) ->
-        request.get url, (err, res, body) ->
-          return txErr {err:err, fun:'getContent', url:url}, cb(err) if err
+        Task.findOne {id:self.id}, (err, row) ->
+          return txErr {err:err, fun:'changeStatus', id:self.id}, cb(err) if err
 
+          if not row
+            return txErr {err:'data not find', id:self.id}, cb("not find db")
+
+          callback(null, row)
+
+      (row, callback) ->
+        row.status = 2
+        row.save (err, res) ->
+          return txErr {err:err, id:self.id}, cb(err) if err
+
+          cb()
+    ]
+
+  # 获取并转换内容
+  changeContent:(cb) ->
+    self = @
+    async.waterfall [
+      (callback) ->
+        request.get self.url, (err, res, body) ->
+          return txErr {err:err, fun:'getContent', url:self.url}, cb(err) if err
           callback(null, body)
 
       (body, callback) ->
@@ -51,48 +97,61 @@ class PushEvernote
             err:'not content', fun:'changeContent-cherrio', html:html
           }, cb('not content')
 
+        self.filterZhihu($)
         $cHtml = cheerio.load($contentDiv.html())
         self.filterHtml($cHtml)
         callback(null, $cHtml)
 
       ($cHtml, callback) ->
-        self.changeImgHtml $cHtml, title, cb
+        self.changeImgHtml $cHtml, cb
 
     ]
 
 
   # 转换img标签
-  changeImgHtml:($,title, cb) ->
+  changeImgHtml:($, cb) ->
     self = @
     imgs = $("img")
-    console.log "#{title} find img length => #{imgs.length}"
+    console.log "#{self.title} find img length => #{imgs.length}"
     async.eachSeries imgs, (item, callback) ->
       src = $(item).attr('src')
       styleAttr = $(item).attr("style")
       styleAttr = "style=" + "'" + styleAttr + "'"
 
       self.readImgRes src, (err, resource) ->
-        return txErr {err:err, title:title, url:src,fun:'changeContent-changeImgHtml'}, cb(err) if err
+        return txErr {err:err, title:self.title, url:src,fun:'changeContent-changeImgHtml'}, cb(err) if err
 
         self.resourceArr.push resource
         md5 = crypto.createHash('md5')
         md5.update(resource.image)
         hexHash = md5.digest('hex')
         newTag = "<en-media type=#{resource.mime} hash=#{hexHash} "  + styleAttr + " />"
+#        newTag = "<en-media type=#{resource.mime} hash=#{hexHash} />"
         $(item).replaceWith(newTag)
 
         callback()
 
     ,() ->
-      console.log "#{title} #{imgs.length} imgs down ok"
-      self.enContent = $.html({xmlMode:true, decodeEntities: false})
+      console.log "#{self.title} #{imgs.length} imgs down ok"
+      self.enContent = $.html({xmlMode:true, decodeEntities: true})
+#      console.log self.enContent
       cb()
+
+  # 过滤掉知乎不需要HTML
+  filterZhihu:($) ->
+    global_header = $("body > div.global-header")[0]
+    qr =  $("div.main-wrap.content-wrap > div.qr")[0]
+    header_for_mobile = $("body > .header-for-mobile")[0]
+    bottom_wrap = $("body > div.bottom-wrap")[0]
+    $(global_header).remove()
+    $(qr).remove()
+    $(header_for_mobile).remove()
+    $(bottom_wrap).remove()
 
 
   # 过滤HTML
   filterHtml:($) ->
     self = @
-    $(".global-header").remove()
 
     $("script").remove()
 
@@ -185,8 +244,11 @@ class PushEvernote
 
     return options
 
-p = new PushEvernote()
-p.changeContent('http://daily.zhihu.com/story/4744440', 'hello')
+
+module.exports = PushEvernote
+#p = new PushEvernote(noteStore, '', 'http://daily.zhihu.com/story/4726006', '4726006', 'hello')
+#p.pushNote (err) ->
+#  console.log err
 
 
 
