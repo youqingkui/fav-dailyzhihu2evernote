@@ -22,17 +22,17 @@
 
   rule1.dayOfWeek = [0, new schedule.Range(1, 6)];
 
-  rule1.hour = 20;
+  rule1.hour = 21;
 
-  rule1.minute = 41;
+  rule1.minute = 18;
 
   rule2 = new schedule.RecurrenceRule();
 
   rule2.dayOfWeek = [0, new schedule.Range(1, 6)];
 
-  rule2.hour = 20;
+  rule2.hour = 21;
 
-  rule2.minute = 42;
+  rule2.minute = 19;
 
   j1 = schedule.scheduleJob(rule1, function() {
     var ca;

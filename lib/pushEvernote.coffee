@@ -44,7 +44,7 @@ class PushEvernote
   # 创建笔记
   createNote:(cb) ->
     self = @
-    makeNote self.noteStore, self.title, self.enContent,{sourceURL:self.url, resources:self.resourceArr},
+    makeNote self.noteStore, self.title, self.enContent,{sourceURL:self.url, resources:self.resourceArr, notebookGuid:self.noteBook},
       (err, note) ->
         return txErr {err:err, fun:'createNote', id:self.id}, cb(err) if err
 
