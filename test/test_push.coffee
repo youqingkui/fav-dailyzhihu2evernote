@@ -11,13 +11,13 @@ CheckAdd = require('../lib/checkAdd')
 rule1 = new schedule.RecurrenceRule()
 rule1.dayOfWeek = [0, new schedule.Range(1, 6)]
 rule1.hour = 21
-rule1.minute = 18
+rule1.minute = 24
 
 
 rule2 = new schedule.RecurrenceRule()
 rule2.dayOfWeek = [0, new schedule.Range(1, 6)]
 rule2.hour = 21
-rule2.minute = 19
+rule2.minute = 25
 
 
 j1 = schedule.scheduleJob rule1, () ->
@@ -51,7 +51,7 @@ j2 = schedule.scheduleJob rule2, () ->
 
     (tasks, cb) ->
       async.eachSeries tasks, (item, callback) ->
-        p = new PushEvernote(noteStore, 'abfa14bd-8abf-4399-a0ee-70da3b253033', item.url, item.id, item.title)
+        p = new PushEvernote(noteStore, 'afd17372-f9c2-4186-bc88-0eede8ee416f', item.url, item.id, item.title)
         p.pushNote callback
 
       ,() ->
