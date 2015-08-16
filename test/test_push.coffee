@@ -16,8 +16,8 @@ rule1.minute = 10
 
 rule2 = new schedule.RecurrenceRule()
 rule2.dayOfWeek = [0, new schedule.Range(1, 6)]
-rule2.hour = 10
-rule2.minute = 20
+rule2.hour = 19
+rule2.minute = 15
 
 
 j1 = schedule.scheduleJob rule1, () ->
