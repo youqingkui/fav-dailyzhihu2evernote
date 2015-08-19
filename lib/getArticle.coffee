@@ -65,6 +65,9 @@ class SaveEvernote extends GetArticle
   changeContent: (cb) ->
     self = @
     $ = cheerio.load(self.content, {decodeEntities: false})
+    console.log " $ = cheerio.load(self.content, {decodeEntities: false}) -------------------------"
+    console.log $.html({decodeEntities: false})
+    console.log " $ = cheerio.load(self.content, {decodeEntities: false}) -------------------------"
     $("*")
     .map (i, elem) ->
       for k, v of elem.attribs
@@ -108,6 +111,9 @@ class SaveEvernote extends GetArticle
     console.log "#{self.title} find img length => #{imgs.length}"
     async.eachSeries imgs, (item, callback) ->
       src = $(item).attr('data-actualsrc')
+      styleAttr = $(item).attr("style")
+      styleAttr = "style=" + "'" + styleAttr + "'"
+#      return console.log styleAttr
       if not src
         src = $(item).attr('src')
 
@@ -118,7 +124,7 @@ class SaveEvernote extends GetArticle
         md5 = crypto.createHash('md5')
         md5.update(resource.image)
         hexHash = md5.digest('hex')
-        newTag = "<en-media type=#{resource.mime} hash=#{hexHash} />"
+        newTag = "<en-media type=#{resource.mime} hash=#{hexHash} "  + styleAttr + " />"
         $(item).replaceWith(newTag)
 
         callback()
@@ -126,7 +132,9 @@ class SaveEvernote extends GetArticle
     ,() ->
       console.log "#{self.title} #{imgs.length} imgs down ok"
       self.enContent = $.html({xmlMode:true, decodeEntities: false})
-#      console.log self.enContent
+      console.log "self.enContent ++++++++++++++++++++++++++"
+      console.log self.enContent
+      console.log "self.enContent ++++++++++++++++++++++++++"
       cb()
 
 
