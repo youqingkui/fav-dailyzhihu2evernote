@@ -54,7 +54,7 @@ class CheckAdd
   addTask:(taskInfo, cb) ->
     task = Task()
     task.id = taskInfo.id
-    task.title = taskInfo.title
+    task.title = taskInfo.title.trim()
     task.url = 'http://daily.zhihu.com/story/' + task.id
 
     task.save (err, row) ->
