@@ -151,7 +151,8 @@ class PushEvernote
     $(header_for_mobile).remove()
     $(bottom_wrap).remove()
 
-    $(".content-inner").find(".question").last().remove()
+    if $(".content-inner").find(".question").length >= 2
+      $(".content-inner").find(".question").last().remove()
 
 
   # 过滤HTML

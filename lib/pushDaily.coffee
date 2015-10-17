@@ -10,8 +10,6 @@ class PushDaily extends PushEvernote
   constructor:(@noteStore, @noteBook, @url, @id, @title) ->
     super
 
-
-
   # 标记完成
   changeStatus:(cb) ->
     self = @
@@ -34,26 +32,26 @@ class PushDaily extends PushEvernote
     ]
 
 
+module.exports = PushDaily
 
 
-async.waterfall [
-  (cb) ->
-    Daily.find {status:0}, null, {sort: {_id: -1}}, (err, rows) ->
-      return txErr op.url, {err:err, fun:'getList-find'} if err
-
-      for i in rows
-        console.log i
-
-      cb(null, rows)
-
-  (tasks, cb) ->
-    async.eachSeries tasks, (item, callback) ->
-      p = new PushDaily(noteStore, 'af0137f4-89c6-4ad1-9bde-758bdcf378c1', item.url, item.href, item.title)
-      p.pushNote callback
-
-    ,() ->
-      console.log "all do"
-      console.log "all do"
-]
+#async.waterfall [
+#  (cb) ->
+#    Daily.find {status:0}, null, {sort: {_id: -1}}, (err, rows) ->
+#      return txErr op.url, {err:err, fun:'getList-find'} if err
+#
+#      for i in rows
+#        console.log i
+#
+#      cb(null, rows)
+#
+#  (tasks, cb) ->
+#    async.eachSeries tasks, (item, callback) ->
+#      p = new PushDaily(noteStore, 'af0137f4-89c6-4ad1-9bde-758bdcf378c1', item.url, item.href, item.title)
+#      p.pushNote callback
+#
+#    ,() ->
+#      console.log "all do"
+#]
 
 

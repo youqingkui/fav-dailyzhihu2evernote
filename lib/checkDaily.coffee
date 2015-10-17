@@ -39,8 +39,7 @@ class CheckDaily
         href = $(row).attr("href")
         title = $(row).find(".title").text()
         if not href or not title
-          tx {err:"not find title, href", fun:'checkAdd', row:row}
-          return callback()
+          return tx {err:"not find title, href", fun:'checkAdd', row:row}, callback
 
         tmp = {}
         tmp.href = href
@@ -100,8 +99,7 @@ class CheckDaily
     return options
 
 
-d = new CheckDaily()
-d.doTask () ->
+module.exports = CheckDaily
 
 
 
