@@ -8,7 +8,7 @@ CheckDaily = require('../lib/checkDaily')
 
 
 rule = new schedule.RecurrenceRule()
-rule.minute = 50
+rule.minute = 30
 
 
 j = schedule.scheduleJob rule, () ->

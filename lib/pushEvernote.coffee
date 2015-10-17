@@ -244,6 +244,7 @@ class PushEvernote
 
   reqOp:(getUrl) ->
     options =
+      timeout:50000
       url:getUrl
       headers:
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36',
