@@ -25,6 +25,7 @@ class PushDaily extends PushEvernote
 
       (row, callback) ->
         row.status = 2
+        row.guid = self.guid
         row.save (err, res) ->
           return tx {err:err, id:self.id}, cb(err) if err
 

@@ -18,7 +18,7 @@
 
   rule = new schedule.RecurrenceRule();
 
-  rule.minute = 30;
+  rule.minute = 35;
 
   j = schedule.scheduleJob(rule, function() {
     return async.waterfall([

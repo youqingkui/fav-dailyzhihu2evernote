@@ -51,6 +51,7 @@ class PushEvernote
         console.log "##############"
         console.log note.title + " create ok"
         console.log "##############"
+        self.guid = note.guid
         cb()
 
   # 标记完成
