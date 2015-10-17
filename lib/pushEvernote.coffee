@@ -113,11 +113,14 @@ class PushEvernote
     self = @
     imgs = $("img")
     console.log "#{self.title} find img length => #{imgs.length}"
-    async.eachSeries imgs, (item, callback) ->
+    imgsIndex = 0
+    async.eachLimit imgs, 5, (item, callback) ->
       src = $(item).attr('src')
       styleAttr = $(item).attr("style")
       styleAttr = "style=" + "'" + styleAttr + "'"
 
+      imgsIndex += 1
+      console.log "开始获取[#{imgsIndex}, #{self.title}, #{src}]"
       self.readImgRes src, (err, resource) ->
         return txErr {err:err, title:self.title, url:src,fun:'changeContent-changeImgHtml'}, cb(err) if err
 
@@ -147,6 +150,9 @@ class PushEvernote
     $(qr).remove()
     $(header_for_mobile).remove()
     $(bottom_wrap).remove()
+
+    if $(".content-inner").find(".question").length >= 2
+      $(".content-inner").find(".question").last().remove()
 
 
   # 过滤HTML
