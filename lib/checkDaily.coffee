@@ -1,8 +1,8 @@
 request = require('request')
 async = require('async')
 tx = require('./txErr')
-Daily = require('../models/daily')
 cheerio = require('cheerio')
+ZhihuDaily = require('../models/zhihu_daily')
 noteStore = require('../lib/noteStore')
 
 class CheckDaily
@@ -64,7 +64,7 @@ class CheckDaily
   addRow:(href, title, cb) ->
     async.series [
       (callback) ->
-        Daily.findOne {href:href}, (err, row) ->
+        ZhihuDaily.where({href:href}).findOne (err, row) ->
           if err
             tx {err:err, fun:'addRow', href:href, title:title}
             return cb()
@@ -76,10 +76,11 @@ class CheckDaily
             callback()
 
       (callback) ->
-        daily = new Daily()
+        daily = {}
         daily.href = href
         daily.title = title
         daily.url = "http://daily.zhihu.com#{href}"
+        daily = ZhihuDaily.build daily
         daily.save (err, row) ->
           if err
             tx {err:err, fun:'addDaily', href:href, title:title}

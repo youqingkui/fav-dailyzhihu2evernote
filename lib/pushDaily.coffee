@@ -1,5 +1,6 @@
 PushEvernote = require('./pushEvernote')
 Daily = require('../models/daily')
+ZhihuDaily = require('../models/zhihu_daily')
 async = require('async')
 tx = require('./txErr')
 noteStore = require('./noteStore')
@@ -15,7 +16,7 @@ class PushDaily extends PushEvernote
     self = @
     async.waterfall [
       (callback) ->
-        Daily.findOne {href:self.id}, (err, row) ->
+        ZhihuDaily.where({href:self.id}).findOne (err, row) ->
           return tx {err:err, fun:'changeStatus', id:self.id}, cb(err) if err
 
           if not row
