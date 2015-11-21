@@ -1,5 +1,4 @@
 PushEvernote = require('./pushEvernote')
-Daily = require('../models/daily')
 ZhihuDaily = require('../models/zhihu_daily')
 async = require('async')
 tx = require('./txErr')

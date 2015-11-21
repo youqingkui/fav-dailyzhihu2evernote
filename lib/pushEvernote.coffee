@@ -1,8 +1,8 @@
 noteStore = require('./noteStore')
 async = require('async')
 request = require('request')
-Task = require('../models/tasks')
 cheerio = require('cheerio')
+ZhihuDaily = require('../models/zhihu_daily')
 inlineCss = require('inline-css')
 crypto = require('crypto')
 makeNote = require('./makeNote')
@@ -59,7 +59,7 @@ class PushEvernote
     self = @
     async.waterfall [
       (callback) ->
-        Task.findOne {id:self.id}, (err, row) ->
+        ZhihuDaily.findOne {id:self.id}, (err, row) ->
           return txErr {err:err, fun:'changeStatus', id:self.id}, cb(err) if err
 
           if not row
