@@ -17,6 +17,9 @@
     "ACE_DB": "value mro..",
     "ACE_NAME": "value mro..",
     "ACE_PWD": "value mro..",
-    "ACE_HOST": "value mro.."
+    "ACE_HOST": "value mro..",
+    "DeveloperToken":"",
+    "ERROR_EMAIL":"",
+    "ERROR_EMAIL_PWD":""
   }
 }
