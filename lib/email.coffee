@@ -18,6 +18,6 @@ module.exports = () ->
 #      generateTextFromHtml: true
 
     ,(err, info) ->
-      return console.log err if err
+      return console.error err if err
 
-      console.log info
+      console.info info

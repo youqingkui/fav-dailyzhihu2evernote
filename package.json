@@ -1,12 +1,15 @@
 {
   "name": "application-name",
   "version": "0.0.1",
-  "main":"./test/test_daily.js",
+  "main": "./test/test_daily.js",
   "dependencies": {
     "async": "^0.9.0",
     "cheerio": "^0.19.0",
+    "compression": "^1.6.0",
     "evernote": "^1.25.5",
+    "express": "^4.13.3",
     "inline-css": "^1.0.5",
+    "morgan": "^1.6.1",
     "node-schedule": "^0.2.6",
     "nodemailer": "^1.3.4",
     "request": "^2.55.0",
@@ -18,8 +21,8 @@
     "ACE_NAME": "value mro..",
     "ACE_PWD": "value mro..",
     "ACE_HOST": "value mro..",
-    "DeveloperToken":"",
-    "ERROR_EMAIL":"",
-    "ERROR_EMAIL_PWD":""
+    "DeveloperToken": "",
+    "ERROR_EMAIL": "",
+    "ERROR_EMAIL_PWD": ""
   }
 }

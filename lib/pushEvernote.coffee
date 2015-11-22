@@ -48,9 +48,9 @@ class PushEvernote
       (err, note) ->
         return txErr {err:err, fun:'createNote', id:self.id}, cb(err) if err
 
-        console.log "##############"
-        console.log note.title + " create ok"
-        console.log "##############"
+        console.info "##############"
+        console.info note.title + " create ok"
+        console.info "##############"
         self.guid = note.guid
         cb()
 
@@ -113,7 +113,7 @@ class PushEvernote
   changeImgHtml:($, cb) ->
     self = @
     imgs = $("img")
-    console.log "#{self.title} find img length => #{imgs.length}"
+    console.info "#{self.title} find img length => #{imgs.length}"
     imgsIndex = 0
     async.eachLimit imgs, 5, (item, callback) ->
       src = $(item).attr('src')
@@ -121,7 +121,7 @@ class PushEvernote
       styleAttr = "style=" + "'" + styleAttr + "'"
 
       imgsIndex += 1
-      console.log "开始获取[#{imgsIndex}, #{self.title}, #{src}]"
+      console.info "开始获取[#{imgsIndex}, #{self.title}, #{src}]"
       self.readImgRes src, (err, resource) ->
         return txErr {err:err, title:self.title, url:src,fun:'changeContent-changeImgHtml'}, cb(err) if err
 
@@ -136,9 +136,9 @@ class PushEvernote
         callback()
 
     ,() ->
-      console.log "#{self.title} #{imgs.length} imgs down ok"
+      console.info "#{self.title} #{imgs.length} imgs down ok"
       self.enContent = $.html({xmlMode:true, decodeEntities: true})
-#      console.log self.enContent
+#      console.info self.enContent
       cb()
 
   # 过滤掉知乎不需要HTML
@@ -256,7 +256,7 @@ class PushEvernote
 module.exports = PushEvernote
 #p = new PushEvernote(noteStore, '', 'http://daily.zhihu.com/story/4726006', '4726006', 'hello')
 #p.pushNote (err) ->
-#  console.log err
+#  console.info err
 
 
 

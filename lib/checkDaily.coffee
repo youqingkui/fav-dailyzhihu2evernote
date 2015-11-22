@@ -70,7 +70,7 @@ class CheckDaily
             return cb()
 
           if row
-            console.log "find same ==> #{href}, #{title}, #{row.title}"
+            console.info "find same ==> #{href}, #{title}, #{row.title}"
             cb()
           else
             callback()
@@ -86,7 +86,7 @@ class CheckDaily
             tx {err:err, fun:'addDaily', href:href, title:title}
             return cb()
 
-          console.log("add ok #{row.title}, #{row.url}")
+          console.info("add ok #{row.title}, #{row.url}")
           cb()
     ]
 
