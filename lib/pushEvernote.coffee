@@ -22,6 +22,12 @@ class PushEvernote
     self = @
     async.series [
       (callback) ->
+        self.checkStatus (err) ->
+          return cb() if err
+
+          callback()
+
+      (callback) ->
         self.changeContent (err) ->
           return cb() if err
           callback()
@@ -41,7 +47,22 @@ class PushEvernote
     ]
 
 
-  # 创建笔记
+  # 检查状态
+  checkStatus:(cb) ->
+    _this = @
+    ZhihuDaily.where({href:_this.id}).findOne (err, row) ->
+      return txErr {err:err, fun:'checkStatus', id:_this.id}, cb(err) if err
+
+      if not row
+        return txErr {err:'data not find', id:_this.id}, cb("not find db")
+
+      if row.status != 0
+        return txErr {err:'status not 0', id:_this.id}, cb('status not 0')
+
+      cb()
+
+
+# 创建笔记
   createNote:(cb) ->
     self = @
     makeNote self.noteStore, self.title.trim(), self.enContent,{sourceURL:self.url, resources:self.resourceArr, notebookGuid:self.noteBook},
@@ -121,7 +142,7 @@ class PushEvernote
       styleAttr = "style=" + "'" + styleAttr + "'"
 
       imgsIndex += 1
-      console.info "开始获取[#{imgsIndex}, #{self.title}, #{src}]"
+#      console.info "开始获取[#{imgsIndex}, #{self.title}, #{src}]"
       self.readImgRes src, (err, resource) ->
         return txErr {err:err, title:self.title, url:src,fun:'changeContent-changeImgHtml'}, cb(err) if err
 

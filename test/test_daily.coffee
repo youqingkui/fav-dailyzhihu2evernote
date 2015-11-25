@@ -5,6 +5,8 @@ tx = require('../lib/txErr')
 noteStore = require('../lib/noteStore')
 schedule = require("node-schedule")
 CheckDaily = require('../lib/checkDaily')
+cargo = require('../lib/cargo')
+
 
 #
 #rule = new schedule.RecurrenceRule()
@@ -51,10 +53,23 @@ async.waterfall [
       cb(null, rows)
 
   (tasks, cb) ->
-    async.eachSeries tasks, (item, callback) ->
+    tasks.forEach (item) ->
       p = new PushDaily(noteStore, '735b3e76-e7f5-462c-84d0-bb1109bcd7dd', item.url, item.href, item.title)
-      p.pushNote callback
+      cargo.push {name:item.title, run:(callback) -> p.pushNote callback }
+
+
+#    async.eachSeries tasks, (item, callback) ->
+#      p = new PushDaily(noteStore, '735b3e76-e7f5-462c-84d0-bb1109bcd7dd', item.url, item.href, item.title)
+#      cargo.push {name:item.title}, (err) ->
+#        p.pushNote () ->
+#
+#          callback()
 
     ,() ->
       console.log "all do"
 ]
+
+
+
+
+

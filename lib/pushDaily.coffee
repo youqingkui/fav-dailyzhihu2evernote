@@ -10,6 +10,8 @@ class PushDaily extends PushEvernote
   constructor:(@noteStore, @noteBook, @url, @id, @title) ->
     super
 
+
+
   # 标记完成
   changeStatus:(cb) ->
     self = @
