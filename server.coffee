@@ -5,7 +5,7 @@ compress = require('compression')
 
 PushDaily = require('./lib/pushDaily')
 ZhihuDaily = require('./models/zhihu_daily')
-tx = require('./lib/txErr')
+txErr = require('./lib/txErr')
 noteStore = require('./lib/noteStore')
 CheckDaily = require('./lib/checkDaily')
 cargo = require('./lib/cargo')
@@ -16,8 +16,7 @@ morgan.token 'date', () ->
 
 app.use(morgan('combined'))
 
-# 是否检查
-CHECK = true
+
 
 app.get '/', (req, res) ->
 
@@ -43,18 +42,10 @@ app.get '/do_task', (req, res) ->
       tasks.forEach (item) ->
         p = new PushDaily(noteStore, '735b3e76-e7f5-462c-84d0-bb1109bcd7dd', item.url, item.href, item.title)
         cargo.push {name:item.title, run:(callback) -> p.pushNote callback }
-
-
-#    async.eachSeries tasks, (item, callback) ->
-#      p = new PushDaily(noteStore, '735b3e76-e7f5-462c-84d0-bb1109bcd7dd', item.url, item.href, item.title)
-#      cargo.push {name:item.title}, (err) ->
-#        p.pushNote () ->
-#
-#          callback()
-
       ,() ->
         console.log "all do"
   ]
+
   res.send "ok"
 
 
